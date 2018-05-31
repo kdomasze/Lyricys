@@ -1,6 +1,11 @@
-# Lyricys
-
-An Android app for quickly getting the lyrics to your favorite songs.
+<h1 align="center">
+<br>
+  <img src="https://raw.githubusercontent.com/kdomasze/Lyricys/master/app/src/main/res/mipmap-xxxhdpi/ic_lyricys_round.png" alt="Lyricys logo" title="Lyricys" height="200" />
+  <br>
+Lyricys 
+<br>
+</h1>
+<h4 align="center">An Android app for quickly getting the lyrics to your favorite songs.</h4>
 
 ## What does it do?
 
