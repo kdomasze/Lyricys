@@ -1,7 +1,6 @@
 package me.domaszewicz.lyricys;
 
 import android.annotation.TargetApi;
-import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,13 +15,13 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
+import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
@@ -174,12 +173,18 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Sha
             Drawable info = ContextCompat.getDrawable(this, R.drawable.ic_info_black_24dp);
             Drawable palette = ContextCompat.getDrawable(this, R.drawable.palette);
 
-            if(ThemeHelper.CheckTheme()) {
-                DrawableCompat.setTint(info, ContextCompat.getColor(this, R.color.white));
-                DrawableCompat.setTint(palette, ContextCompat.getColor(this, R.color.white));
+            int color;
+            if (ThemeHelper.IsDarkTheme()) {
+                color = R.color.white;
             } else {
-                DrawableCompat.setTint(info, ContextCompat.getColor(this, R.color.black));
-                DrawableCompat.setTint(palette, ContextCompat.getColor(this, R.color.black));
+                color = R.color.black;
+            }
+
+            if (info != null) {
+                DrawableCompat.setTint(info, ContextCompat.getColor(this, color));
+            }
+            if (palette != null) {
+                DrawableCompat.setTint(palette, ContextCompat.getColor(this, color));
             }
         }
     }
@@ -241,7 +246,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Sha
             if(!sharedPreferences.getBoolean("notification_switch", true)) {
                 NotificationHelper.KillNotification();
             } else {
-                NotificationHelper.DisplayNotification();
+                NotificationHelper.DisplayNotification(getApplicationContext());
             }
         }
     }

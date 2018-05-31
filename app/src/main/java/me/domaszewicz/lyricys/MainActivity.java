@@ -2,8 +2,8 @@ package me.domaszewicz.lyricys;
 
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -34,19 +34,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Initialize helper classes
         _notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        new NotificationHelper(_notificationManager, this);
         new PreferenceHelper(this);
-
+        new NotificationHelper(_notificationManager);
         ThemeHelper.CheckAndSetTheme(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        resultTextView = (TextView) findViewById(R.id.result);
-        titleTextView = (TextView) findViewById(R.id.title);
+        resultTextView = findViewById(R.id.result);
+        titleTextView = findViewById(R.id.title);
 
-        resultTextView.setText("This might take a few moments.");
+        resultTextView.setText(R.string.take_few_moments);
     }
 
     @Override
@@ -86,11 +86,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void BuildAboutPage()
-    {
+    /**
+     * Builds and displays the About Page for the application
+     */
+    private void BuildAboutPage() {
         LibsBuilder aboutLibs = new LibsBuilder();
-        if(ThemeHelper.CheckTheme())
-        {
+        if (ThemeHelper.IsDarkTheme()) {
             aboutLibs.withActivityStyle(Libs.ActivityStyle.DARK);
         } else {
             aboutLibs.withActivityStyle(Libs.ActivityStyle.LIGHT);
@@ -121,8 +122,9 @@ public class MainActivity extends AppCompatActivity {
         _artist = event.getArtist();
         _track = event.getTrack();
 
-        titleTextView.setText("Looking for lyrics...");
+        titleTextView.setText(R.string.looking_for_lyrics);
 
+        // starts a new thread to download song lyrics
         new GetLyrics(resultTextView, titleTextView).execute(_artist, _track);
     }
 }

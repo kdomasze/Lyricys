@@ -2,7 +2,7 @@
     <string name="app_name">Lyricys</string>
     <string name="Lyricus">Lyricus</string>
     <string name="unknown">Unknown</string>
-    <string name="waiting_for_song">Waiting for song...</string>
+    <string name="waiting_for_song">Waiting for song…</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
@@ -88,4 +88,6 @@
     <string name="aboutLibraries_description_showIcon">true</string>
     <string name="aboutLibraries_description_showVersion">true</string>
     <string name="pref_header_theme">Theme</string>
+    <string name="take_few_moments">This might take a few moments.</string>
+    <string name="looking_for_lyrics">Looking for lyrics…</string>
 </resources>

@@ -7,22 +7,25 @@ import android.widget.TextView;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
+/**
+ * Async class to retrieve lyrics and update the MainActivity's display
+ */
 public class GetLyrics extends AsyncTask<String, Void, String> {
     private static final String TAG = "lyricys.GetLyrics";
 
-    private final TextView _resultView;
-    private final TextView _titleView;
+    private final WeakReference<TextView> _resultView;
+    private final WeakReference<TextView> _titleView;
 
     private String _artist;
     private String _song;
 
-    public GetLyrics(TextView resultView, TextView titleView) {
-        _resultView = resultView;
-        _titleView = titleView;
+    GetLyrics(TextView resultView, TextView titleView) {
+        _resultView = new WeakReference(resultView);
+        _titleView = new WeakReference(titleView);
     }
 
     @Override
@@ -31,7 +34,7 @@ public class GetLyrics extends AsyncTask<String, Void, String> {
         _song = params[1];
 
         String url = "http://lyrics.wikia.com/wiki/" + _artist + ":" + _song;
-        String output = "";
+        String output;
 
         try {
             output = ParseLyrics(url);
@@ -43,6 +46,13 @@ public class GetLyrics extends AsyncTask<String, Void, String> {
         return output;
     }
 
+    /**
+     * Downloads and parses the html for the lyrics
+     *
+     * @param url url for page with lyrics
+     * @return a string of lyrics
+     * @throws IOException if method cannot retrieve html for lyrics
+     */
     private String ParseLyrics(String url) throws IOException {
         Document doc = Jsoup.connect(url).get();
 
@@ -60,7 +70,7 @@ public class GetLyrics extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String lyrics) {
-        _titleView.setText(_artist + ": " + _song);
-        _resultView.setText(lyrics);
+        _titleView.get().setText(_artist + ": " + _song);
+        _resultView.get().setText(lyrics);
     }
 }

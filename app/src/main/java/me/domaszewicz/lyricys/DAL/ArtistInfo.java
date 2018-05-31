@@ -1,5 +1,8 @@
 package me.domaszewicz.lyricys.DAL;
 
+/**
+ * Java Object for passing artist info from SongInfoBroadcastReceiver to MainActivity
+ */
 public class ArtistInfo {
     private String _artist;
     private String _track;
