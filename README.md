@@ -7,6 +7,13 @@ Lyricys
 </h1>
 <h4 align="center">An Android app for quickly getting the lyrics to your favorite songs.</h4>
 
+<p align="center">
+    <img src="https://github.com/kdomasze/Lyricys/blob/master/screenshots/mainInterface.png?raw=true"
+         alt="Main Interface example" width="350">
+  <img src="https://github.com/kdomasze/Lyricys/blob/master/screenshots/themeSwitchingExample.gif?raw=true"
+         alt="Theme changing example" width="350">
+  </a>
+
 ## What does it do?
 
 Lyricys will display a simple interface with the lyrics to the currently playing song on your device. Simple as that!
