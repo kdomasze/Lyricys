@@ -1,0 +1,37 @@
+# Lyricys
+
+An Android app for quickly getting the lyrics to your favorite songs.
+
+## What does it do?
+
+Lyricys will display a simple interface with the lyrics to the currently playing song on your device. Simple as that!
+
+## How does it work?
+
+Lyricys makes use of Android's BroadcastReciever functionality in order to recieve metadata changes from different music apps. 
+This metadata includes information such as the song's name and artist. 
+With these details, [LyricWiki](http://lyrics.wikia.com/wiki/LyricWiki) can be scrapped for song lyrics and displayed on the app.
+
+## Any other features?
+
+Currently included are a toggle-able night mode and a persistant notification to quickly switch to the app.
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development.
+
+### Prerequisites
+
+The project was created using Android Studio Version 3.1.2.
+
+### Instructions for Building
+
+Pull the project and open the project in ANdroid Studio. It should be ready for compilation out of the box.
+
+## Authors
+
+* **Kyle Domaszewicz** - [kdomasze](https://github.com/kdomasze)
+
+## License
+
+Pending
