@@ -46,4 +46,4 @@ Pull the project and open the project in Android Studio. It should be ready for 
 
 ## License
 
-Pending
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
