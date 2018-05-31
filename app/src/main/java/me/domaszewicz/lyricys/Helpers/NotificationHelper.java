@@ -1,6 +1,7 @@
 package me.domaszewicz.lyricys.Helpers;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -27,8 +28,15 @@ public class NotificationHelper {
      *
      * @param notificationManager instance of the notificationManager
      */
-    public NotificationHelper(NotificationManager notificationManager) {
+    public NotificationHelper(NotificationManager notificationManager, Context context) {
         _notificationManager = notificationManager;
+
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            NotificationChannel notificationChannel = new NotificationChannel(String.valueOf(NOTIFICATION_ID), "Lyricys", importance);
+            _notificationManager.createNotificationChannel(notificationChannel);
+        }
     }
 
     /**
@@ -47,6 +55,7 @@ public class NotificationHelper {
      * calling this function again will update the notification text
      */
     public static void DisplayNotification(Context context) {
+
         // kill the notification if notifications are disabled
         if (!PreferenceHelper.GetBoolValue("notification_switch", true)) {
             KillNotification();
@@ -58,18 +67,32 @@ public class NotificationHelper {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
-        // setup notification
-        Notification n = new Notification.Builder(context)
-                .setContentTitle(_track)
-                .setContentText(_artist)
-                .setSmallIcon(R.drawable.lyricys_notification_icon)
-                .setOngoing(true)
-                .setPriority(Notification.PRIORITY_MIN)
-                .setContentIntent(pendingIntent)
-                .build();
+        Notification n;
 
-        // shows notification
-        _notificationManager.notify(NOTIFICATION_ID, n);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            // setup notification
+            n = new Notification.Builder(context, String.valueOf(NOTIFICATION_ID))
+                    .setContentTitle(_track)
+                    .setContentText(_artist)
+                    .setSmallIcon(R.drawable.lyricys_notification_icon)
+                    .setOngoing(true)
+                    .setContentIntent(pendingIntent)
+                    .build();
+            _notificationManager.notify(NOTIFICATION_ID, n);
+        } else {
+            // setup notification
+            n = new Notification.Builder(context)
+                    .setContentTitle(_track)
+                    .setContentText(_artist)
+                    .setSmallIcon(R.drawable.lyricys_notification_icon)
+                    .setOngoing(true)
+                    .setPriority(Notification.PRIORITY_MIN)
+                    .setContentIntent(pendingIntent)
+                    .build();
+
+            // shows notification
+            _notificationManager.notify(NOTIFICATION_ID, n);
+        }
     }
 
     /**

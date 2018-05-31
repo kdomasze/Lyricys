@@ -2,6 +2,7 @@ package me.domaszewicz.lyricys;
 
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -19,12 +20,15 @@ import me.domaszewicz.lyricys.DAL.ArtistInfo;
 import me.domaszewicz.lyricys.Helpers.NotificationHelper;
 import me.domaszewicz.lyricys.Helpers.PreferenceHelper;
 import me.domaszewicz.lyricys.Helpers.ThemeHelper;
+import me.domaszewicz.lyricys.Services.SongInfoBroadcastReceiver;
 
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "lyricys.MainActivity";
 
     private NotificationManager _notificationManager;
+
+    private SongInfoBroadcastReceiver _broadcastReciever;
 
     public TextView resultTextView;
     private TextView titleTextView;
@@ -37,11 +41,33 @@ public class MainActivity extends AppCompatActivity {
         // Initialize helper classes
         _notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         new PreferenceHelper(this);
-        new NotificationHelper(_notificationManager);
+        new NotificationHelper(_notificationManager, this);
         ThemeHelper.CheckAndSetTheme(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (_broadcastReciever == null) {
+
+            _broadcastReciever = new SongInfoBroadcastReceiver();
+
+            IntentFilter iF = new IntentFilter();
+            iF.addAction("com.android.music.metachanged");
+            iF.addAction("com.spotify.music.metadatachanged");
+            iF.addAction("com.htc.music.metachanged");
+            iF.addAction("fm.last.android.metachanged");
+            iF.addAction("com.sec.android.app.music.metachanged");
+            iF.addAction("com.nullsoft.winamp.metachanged");
+            iF.addAction("com.amazon.mp3.metachanged");
+            iF.addAction("com.miui.player.metachanged");
+            iF.addAction("com.real.IMP.metachanged");
+            iF.addAction("com.sonyericsson.music.metachanged");
+            iF.addAction("com.rdio.android.metachanged");
+            iF.addAction("com.samsung.sec.android.MusicPlayer.metachanged");
+            iF.addAction("com.andrew.apollo.metachanged");
+
+            registerReceiver(_broadcastReciever, iF);
+        }
 
         resultTextView = findViewById(R.id.result);
         titleTextView = findViewById(R.id.title);
@@ -59,6 +85,17 @@ public class MainActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+        NotificationHelper.KillNotification();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (_broadcastReciever != null) {
+            unregisterReceiver(_broadcastReciever);
+            _broadcastReciever = null;
+        }
+
+        super.onDestroy();
     }
 
     // Ensure the right menu is setup

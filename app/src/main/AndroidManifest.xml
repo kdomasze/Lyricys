@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <receiver
+        <!--<receiver
             android:name=".Services.SongInfoBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
@@ -42,7 +42,7 @@
                 <action android:name="com.samsung.sec.android.MusicPlayer.metachanged" />
                 <action android:name="com.andrew.apollo.metachanged" />
             </intent-filter>
-        </receiver>
+        </receiver>-->
 
         <activity
             android:name=".SettingsActivity"
