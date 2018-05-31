@@ -20,8 +20,7 @@ public class GetLyrics extends AsyncTask<String, Void, String> {
     private String _artist;
     private String _song;
 
-    public GetLyrics(TextView resultView, TextView titleView)
-    {
+    public GetLyrics(TextView resultView, TextView titleView) {
         _resultView = resultView;
         _titleView = titleView;
     }

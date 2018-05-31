@@ -2,14 +2,10 @@ package me.domaszewicz.lyricys;
 
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.mikepenz.aboutlibraries.Libs;
@@ -28,7 +24,7 @@ import me.domaszewicz.lyricys.Helpers.ThemeHelper;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "lyricys.MainActivity";
 
-    private NotificationManager nMN;
+    private NotificationManager _notificationManager;
 
     public TextView resultTextView;
     private TextView titleTextView;
@@ -38,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        nMN = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        new NotificationHelper(nMN, this);
+        _notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        new NotificationHelper(_notificationManager, this);
         new PreferenceHelper(this);
 
         ThemeHelper.CheckAndSetTheme(this);

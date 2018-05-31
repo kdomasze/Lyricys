@@ -1,6 +1,7 @@
 package me.domaszewicz.lyricys;
 
 import android.annotation.TargetApi;
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +28,7 @@ import android.view.MenuItem;
 
 import java.util.List;
 
+import me.domaszewicz.lyricys.Helpers.NotificationHelper;
 import me.domaszewicz.lyricys.Helpers.ThemeHelper;
 
 /**
@@ -168,8 +170,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Sha
             // Show the Up button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(true);
 
+            // updates settings icons to match light or dark theme
             Drawable info = ContextCompat.getDrawable(this, R.drawable.ic_info_black_24dp);
             Drawable palette = ContextCompat.getDrawable(this, R.drawable.palette);
+
             if(ThemeHelper.CheckTheme()) {
                 DrawableCompat.setTint(info, ContextCompat.getColor(this, R.color.white));
                 DrawableCompat.setTint(palette, ContextCompat.getColor(this, R.color.white));
@@ -230,6 +234,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Sha
             Intent refresh = new Intent(this, MainActivity.class);
             startActivity(refresh);
             finish();
+        }
+
+        if(key.equals("notification_switch"))
+        {
+            if(!sharedPreferences.getBoolean("notification_switch", true)) {
+                NotificationHelper.KillNotification();
+            } else {
+                NotificationHelper.DisplayNotification();
+            }
         }
     }
 

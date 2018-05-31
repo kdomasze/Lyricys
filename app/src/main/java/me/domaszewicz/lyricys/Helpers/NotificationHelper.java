@@ -18,20 +18,17 @@ public class NotificationHelper {
     private static String _artist;
     private static String _track;
 
-    public NotificationHelper(NotificationManager notificationManager, Context context)
-    {
+    public NotificationHelper(NotificationManager notificationManager, Context context) {
         _notificationManager = notificationManager;
         _context = context;
     }
 
-    public static void updateNotificationText(String artist, String track)
-    {
+    public static void updateNotificationText(String artist, String track) {
         _artist = artist;
         _track = track;
     }
 
-    public static void DisplayNotification()
-    {
+    public static void DisplayNotification() {
         Intent intent = new Intent(_context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(_context, 0, intent, 0);
@@ -50,5 +47,9 @@ public class NotificationHelper {
         } else {
             _notificationManager.cancel(NOTIFICATION_ID);
         }
+    }
+
+    public static void KillNotification() {
+        _notificationManager.cancel(NOTIFICATION_ID);
     }
 }
