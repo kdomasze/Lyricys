@@ -26,7 +26,7 @@ With these details, [LyricWiki](http://lyrics.wikia.com/wiki/LyricWiki) can be s
 
 ## Any other features?
 
-Currently included are a toggle-able night mode and a persistant notification to quickly switch to the app.
+Currently included are a toggle-able dark mode and a persistant notification to quickly switch to the app.
 
 ## Getting Started
 
@@ -38,7 +38,7 @@ The project was created using Android Studio Version 3.1.2.
 
 ### Instructions for Building
 
-Pull the project and open the project in ANdroid Studio. It should be ready for compilation out of the box.
+Pull the project and open the project in Android Studio. It should be ready for compilation out of the box.
 
 ## Authors
 
